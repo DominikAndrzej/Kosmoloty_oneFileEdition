@@ -7,7 +7,7 @@ public class Kosmoloty {
             torus = new Torus(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
             kosmoloty = new KosmolotyList(torus, args);
         } catch (IncorrectDataException exception) {
-            System.out.println(exception.getMessage());
+            System.out.print(exception.getMessage());
             System.exit(0);
         }
 
@@ -23,7 +23,7 @@ public class Kosmoloty {
             collider.forEachObjectCollision(kosmoloty);
         }
 
-        System.out.println(findWinner(kosmoloty));
+        System.out.print(findWinner(kosmoloty));
 
         System.exit(0);
     }
