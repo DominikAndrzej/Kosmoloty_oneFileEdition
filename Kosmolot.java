@@ -1,5 +1,6 @@
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+
 import static java.lang.Math.abs;
 
 public class Kosmolot {
@@ -10,7 +11,7 @@ public class Kosmolot {
     private int traveledDistanceInOneMove;
     private boolean isAlive;
 
-    Kosmolot(String name, int speedX, int speedY, int positionX, int positionY, Torus torus) {
+    Kosmolot(String name, int speedX, int speedY, int positionX, int positionY, Torus torus) throws IncorrectDataException {
 
         this.name = name;
         this.speedX = speedX;
@@ -23,8 +24,7 @@ public class Kosmolot {
         traveledDistance = 0;
 
         if (!checkDataCorectness(torus)) {
-            System.out.print("klops Kosmolot");
-            System.exit(0);
+            throw new IncorrectDataException();
         }
     }
 
@@ -34,7 +34,6 @@ public class Kosmolot {
 
         traveledDistance += traveledDistanceInOneMove;
 
-        // sprawdzamy czy przechodzi przez brzeg torusa, jeśli tak to przypisujemy odpowiednie warości do pozycji:
         if (positionX > torus.getTorusLenX() - 1) positionX = positionX - (torus.getTorusLenX());
 
         if (positionY > torus.getTorusLenY() - 1) positionY = positionY - (torus.getTorusLenY());
@@ -74,7 +73,7 @@ public class Kosmolot {
         Pattern namePattern = Pattern.compile("^[a-zA-Z0-9]{1,10}+$");
 
         Matcher matcher = namePattern.matcher(name);
-        if(matcher.matches()){
+        if (matcher.matches()) {
             isCorrect = true;
         } else {
             return false;

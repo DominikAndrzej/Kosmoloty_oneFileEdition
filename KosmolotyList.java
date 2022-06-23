@@ -1,21 +1,21 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.Objects;
-
+import java.util.Scanner;
 
 public class KosmolotyList {
     ArrayList<Kosmolot> list;
 
-    KosmolotyList(Torus torus, String[] args) {
+    KosmolotyList(Torus torus, String[] args) throws IncorrectDataException {
         list = new ArrayList<Kosmolot>();
 
-        Scanner lineScanner = new Scanner(System.in);
+        //Scanner lineScanner = new Scanner(System.in);
         String line;
 
-        int i = 0;
-        while (lineScanner.hasNextLine()) {
+        int i = 2;
+        while (i < args.length/*lineScanner.hasNextLine()*/) {
             String[] kosmolotyRaw;
-            line = lineScanner.nextLine();
+            line = args[i];
+            //lineScanner.nextLine();
 
             kosmolotyRaw = line.split(",");
 
@@ -30,28 +30,23 @@ public class KosmolotyList {
         }
 
         if (!checkDataCorectness()) {
-            System.out.print("klops List");
-            System.exit(0);
+            throw new IncorrectDataException();
         }
     }
 
     private boolean checkDataCorectness() {
-        boolean isCorrect = true;
+        for (Kosmolot i : list) {
 
-        for (int i = 0; i < list.size(); i++) {
+            for (Kosmolot j : list) {
+                if (Objects.equals(i.getName(), j.getName()) && i != j) {
+                    return false;
 
-            for (int j = i+1; j < list.size(); j++) {
-
-                if (Objects.equals(list.get(i).getName(), list.get(j).getName())) {
-                    isCorrect = false;
                 }
-
-                if (list.get(i).getPositionX() == list.get(j).getPositionX() && list.get(i).getPositionY() == list.get(j).getPositionY()) {
-                    isCorrect = false;
+                if (i.getPositionX() == j.getPositionX() && i.getPositionY() == j.getPositionY() && i != j) {
+                    return false;
                 }
             }
         }
-
-        return isCorrect;
+        return true;
     }
 }
